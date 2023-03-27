@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Globalization;
 
 namespace Vjezba_ime_prezime
 {
@@ -24,10 +25,10 @@ namespace Vjezba_ime_prezime
                     Console.WriteLine("1. Odd or even!");
                     Console.WriteLine("2. Quadratic equation!");
                     Console.WriteLine("3. Average score!");
-                    Console.WriteLine("4. Add n numbers and sum the last two digits!");
-                    Console.WriteLine("5. Lets check Lotto numbers!");
-                    Console.WriteLine("6. Option #6");
-                    Console.WriteLine("7. Option #7");
+                    Console.WriteLine("4. Magic numbers and magic sum!");
+                    Console.WriteLine("5. Lets check Lotto numbers! Only for Lotto 7 of 45!");
+                    Console.WriteLine("6. Lotto 6 of 49 ticket! Get lucky!");
+                    Console.WriteLine("7. Persons and Statistics");
                     Console.WriteLine("8. Option #8");
                     Console.WriteLine("0. Exit");
                     Console.WriteLine("");
@@ -51,7 +52,7 @@ namespace Vjezba_ime_prezime
                             }
 
                             Console.WriteLine("");
-                            Console.WriteLine("Press any key to continue...");
+                            Console.WriteLine("Press any key to return to menu....");
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -84,7 +85,7 @@ namespace Vjezba_ime_prezime
                             }
 
                             Console.WriteLine("");
-                            Console.WriteLine("Press any key to continue...");
+                            Console.WriteLine("Press any key to return to menu....");
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -116,7 +117,7 @@ namespace Vjezba_ime_prezime
                             Console.WriteLine("The average score is: {0}", roundedAverageScore);
 
                             Console.WriteLine("");
-                            Console.WriteLine("Press any key to continue...");
+                            Console.WriteLine("Press any key to return to menu....");
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -159,7 +160,7 @@ namespace Vjezba_ime_prezime
                         }
 
                         Console.WriteLine("");
-                        Console.WriteLine("Press any key to continue...");
+                        Console.WriteLine("Press any key to return to menu....");
                         Console.ReadKey();
                         Console.Clear();
                         doneEnteringNumbers = false;
@@ -186,7 +187,7 @@ namespace Vjezba_ime_prezime
                         Console.WriteLine();
 
                         Console.WriteLine("");
-                        Console.WriteLine("Press any key to continue...");
+                        Console.WriteLine("Press any key to return to menu....");
                         Console.ReadKey();
                         Console.Clear();
                         break;
@@ -230,21 +231,59 @@ namespace Vjezba_ime_prezime
 
                         Console.WriteLine("LOTTO ticket generated and saved to {0}", filePath);
                         Console.WriteLine("");
-                        Console.WriteLine("Press any key to continue...");
+                        Console.WriteLine("Press any key to return to menu....");
                         Console.ReadKey();
                         Console.Clear();
                         break;
+
                     case "7":
-                            Console.WriteLine("You selected Option #7");
-                            Console.WriteLine("");
-                            Console.WriteLine("Press any key to continue...");
-                            Console.ReadKey();
-                            Console.Clear();
-                            break;
-                        case "8":
+                        Console.WriteLine("You selected Option #7");
+
+                        List<Person> people = new List<Person>();
+                        for (int i = 0; i < 4; i++)
+                        {
+                            Console.WriteLine($"Person {i + 1}:");
+                            Console.Write("Name: ");
+                            string name = Console.ReadLine();
+                            Console.Write("Surname: ");
+                            string surname = Console.ReadLine();
+                            Console.Write("Date of Birth (YYYY-MM-DD): ");
+                            DateTime dateOfBirth;
+                            while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth))
+                            {
+                                Console.WriteLine("Invalid date format. Please try again.");
+                                Console.Write("Date of Birth (YYYY-MM-DD): ");
+                            }
+                            Console.Write("Sex (M/F): ");
+                            string sex = Console.ReadLine();
+                            while (sex != "M" && sex != "F")
+                            {
+                                Console.WriteLine("Invalid sex. Please try again.");
+                                Console.Write("Sex (M/F): ");
+                                sex = Console.ReadLine();
+                            }
+                            Person person = new Person(name, surname, dateOfBirth, sex);
+                            people.Add(person);
+                        }
+
+                        Statistics statistics = new Statistics(people);
+
+                        Console.WriteLine($"Eldest person: {statistics.GetEldestPerson().Name} {statistics.GetEldestPerson().Surname}");
+                        Console.WriteLine($"Youngest person: {statistics.GetYoungestPerson().Name} {statistics.GetYoungestPerson().Surname}");
+                        Console.WriteLine($"Number of males: {statistics.GetNumberOfMales()}");
+                        Console.WriteLine($"Number of females: {statistics.GetNumberOfFemales()}");
+                        Console.Write("Number of people born before year 2000: ");
+                        Console.WriteLine(statistics.GetNumberOfPeopleBornBeforeYear(2000));
+
+                        Console.WriteLine("");
+                        Console.WriteLine("Press any key to return to menu....");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+                    case "8":
                             Console.WriteLine("You selected Option #8");
                             Console.WriteLine("");
-                            Console.WriteLine("Press any key to continue...");
+                            Console.WriteLine("Press any key to return to menu....");
                             Console.ReadKey();
                             Console.Clear();
                             break;
